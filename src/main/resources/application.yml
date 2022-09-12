@@ -1,0 +1,36 @@
+server:
+  port: 8081
+  servlet:
+     context-path: /meus-funcionarios-microservice
+
+
+feign:
+   client:
+      config:
+         funcionariosClient:
+            loggerLevel: full
+
+
+logging.level.br.com.zup.meusfuncionariosclient.funcionarios.FuncionarioClient: DEBUG
+
+
+##
+# Client credential flow
+##
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          meus-funcionarios:
+            client-id: meus-funcionarios-microservice
+            client-secret: DrOS7iI43ReSxC24SxUPEZKYYVC6UVZM
+            authorization-grant-type: client_credentials
+            scope: funcionarios:read
+
+          # ...
+        provider:
+          meus-funcionarios:
+            token-uri: http://localhost:18080/realms/meus-funcionarios/protocol/openid-connect/token
+            jwk-set-uri: http://localhost:18080/realms/livraria-security/protocol/openid-connect/certs
